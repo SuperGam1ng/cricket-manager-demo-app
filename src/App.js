@@ -4,7 +4,7 @@ import { buildRelayerTransaction } from "./signing";
 
 function App() {
   const [apiUrl, setApiUrl] = useState("");
-  const [apiMethod, setApiMethod] = useState("POST"); // <--- NEW
+  const [apiMethod, setApiMethod] = useState("POST");
   const [requestBody, setRequestBody] = useState("");
   const [response, setResponse] = useState("");
   const [transactionPayload, setTransactionPayload] = useState("");
@@ -14,30 +14,35 @@ function App() {
   const [jobStatusResponse, setJobStatusResponse] = useState("");
   const [privateKey, setPrivateKey] = useState("");
 
-  // NEW LOADING STATES
   const [loadingApiCall, setLoadingApiCall] = useState(false);
   const [loadingSign, setLoadingSign] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [loadingJobStatus, setLoadingJobStatus] = useState(false);
   const [loadingTxnStatus, setLoadingTxnStatus] = useState(false);
 
+  // Auto parsed versions for UI rendering
+  const parsedSubmitResponse = submitResponse
+    ? JSON.parse(submitResponse)
+    : null;
+  const parsedJobStatus = jobStatusResponse
+    ? JSON.parse(jobStatusResponse)
+    : null;
+  const parsedTxnStatus = txnStatusResponse
+    ? JSON.parse(txnStatusResponse)
+    : null;
+
   const handleApiCall = async () => {
     setLoadingApiCall(true);
     try {
       const url = `${process.env.REACT_APP_API_URL}${apiUrl.startsWith("/") ? "" : "/"}${apiUrl}`;
-      console.log(url);
       let res;
 
       if (apiMethod === "GET") {
-        res = await fetch(url, {
-          method: "GET",
-        });
+        res = await fetch(url, { method: "GET" });
       } else {
         res = await fetch(url, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: requestBody,
         });
       }
@@ -91,12 +96,11 @@ function App() {
         `${process.env.REACT_APP_API_URL}/jobs/submit-transaction`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(convertedObj),
         }
       );
+
       const data = await res.json();
       setSubmitResponse(JSON.stringify(data, null, 2));
     } catch (error) {
@@ -104,19 +108,14 @@ function App() {
     }
     setLoadingSubmit(false);
   };
+
   const handleGetJobStatus = async () => {
     setLoadingJobStatus(true);
     try {
       const convertedObj = JSON.parse(signedPayload);
       const res = await fetch(
         `${process.env.REACT_APP_API_URL}/jobs/status?jobId=${convertedObj.jobId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(convertedObj),
-        }
+        { method: "GET" }
       );
       const data = await res.json();
       setJobStatusResponse(JSON.stringify(data, null, 2));
@@ -125,19 +124,14 @@ function App() {
     }
     setLoadingJobStatus(false);
   };
+
   const handleGetTxnStatus = async () => {
     setLoadingTxnStatus(true);
     try {
       const convertedObj = JSON.parse(signedPayload);
       const res = await fetch(
         `${process.env.REACT_APP_RELAYER_API_URL}/api/v1/relayers/glhf-example/transactions/${convertedObj.jobId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(convertedObj),
-        }
+        { method: "GET" }
       );
       const data = await res.json();
       setTxnStatusResponse(JSON.stringify(data, null, 2));
@@ -176,11 +170,10 @@ function App() {
             placeholder="Request Body"
             value={requestBody}
             onChange={(e) => setRequestBody(e.target.value)}
-          ></textarea>
+          />
         )}
 
         <br />
-        {/* DISABLED BUTTON */}
         <button onClick={handleApiCall} disabled={loadingApiCall}>
           {loadingApiCall ? "Sending..." : "Send Request"}
         </button>
@@ -188,89 +181,80 @@ function App() {
       </div>
 
       <div>
-        <h2>2. Sign Transaction Payload</h2>
-        <input
-          type="text"
-          placeholder="Private Key"
-          value={privateKey}
-          onChange={(e) => setPrivateKey(e.target.value)}
-        />
-        <br />
-        <textarea
-          placeholder="Transaction Payload"
-          value={transactionPayload}
-          readOnly
-        />
-        <br />
-        {/* DISABLED BUTTON */}
-        <button onClick={handleSignPayload} disabled={loadingSign}>
-          {loadingSign ? "Signing..." : "Sign Payload"}
-        </button>
-        <pre>{signedPayload}</pre>
-      </div>
-
-      <div>
-        <h2>3. Submit Transaction</h2>
-        <textarea placeholder="Signed Payload" value={signedPayload} readOnly />
-        <br />
-        {/* DISABLED BUTTON */}
-        <button onClick={handleSubmitTransaction} disabled={loadingSubmit}>
-          {loadingSubmit ? "Submitting..." : "Submit Transaction"}
-        </button>
-        <pre>{submitResponse}</pre>
-      </div>
-
-      <div>
-        {submitResponse.jobId && (
+        {response && (
           <>
-            <h2>4. Get Job Status</h2>
+            <h2>2. Sign Transaction Payload</h2>
+            <input
+              type="text"
+              placeholder="Private Key"
+              value={privateKey}
+              onChange={(e) => setPrivateKey(e.target.value)}
+            />
+            <br />
             <textarea
-              placeholder="Job Id"
-              value={submitResponse.jobId}
+              placeholder="Transaction Payload"
+              value={transactionPayload}
               readOnly
             />
             <br />
+            <button onClick={handleSignPayload} disabled={loadingSign}>
+              {loadingSign ? "Signing..." : "Sign Payload"}
+            </button>
+            <pre>{signedPayload}</pre>
+          </>
+        )}
+      </div>
 
-            {/* DISABLED BUTTON */}
+      <div>
+        {signedPayload && (
+          <>
+            <h2>3. Submit Transaction</h2>
+            <textarea value={signedPayload} readOnly />
+            <br />
+            <button onClick={handleSubmitTransaction} disabled={loadingSubmit}>
+              {loadingSubmit ? "Submitting..." : "Submit Transaction"}
+            </button>
+            <pre>{submitResponse}</pre>
+          </>
+        )}
+      </div>
+
+      <div>
+        {parsedSubmitResponse?.jobId && (
+          <>
+            <h2>4. Get Job Status</h2>
+            <textarea value={parsedSubmitResponse.jobId} readOnly />
+            <br />
             <button onClick={handleGetJobStatus} disabled={loadingJobStatus}>
               {loadingJobStatus ? "Fetching..." : "Get Job Status"}
             </button>
-
             <pre>{jobStatusResponse}</pre>
           </>
         )}
       </div>
 
       <div>
-        {jobStatusResponse.transactionId && (
+        {parsedJobStatus?.transactionId && (
           <>
             <h2>5. Get Transaction Status</h2>
-
-            <textarea
-              placeholder="Transaction ID"
-              value={jobStatusResponse.transactionId}
-              readOnly
-            />
+            <textarea value={parsedJobStatus.transactionId} readOnly />
             <br />
-
-            {/* DISABLED BUTTON */}
-            <button onClick={handleGetTxnStatus} disabled={loadingSubmit}>
-              {loadingSubmit ? "Fetching..." : "Get Transaction Status"}
+            <button onClick={handleGetTxnStatus} disabled={loadingTxnStatus}>
+              {loadingTxnStatus ? "Fetching..." : "Get Transaction Status"}
             </button>
-
             <pre>{txnStatusResponse}</pre>
           </>
         )}
       </div>
 
       <div>
-        {txnStatusResponse.transactionHash && (
+        {parsedTxnStatus?.transactionHash && (
           <>
             <h2>6. Verify on Chain</h2>
             <button
               onClick={() =>
                 window.open(
-                  `https://glhf-testnet.explorer.caldera.xyz/tx/${txnStatusResponse.transactionHash}`,
+                  `https://glhf-testnet.explorer.caldera.xyz/tx/${parsedTxnStatus.transactionHash}`,
                   "_blank"
                 )
               }
