@@ -165,7 +165,7 @@ function App() {
     setLoadingTxnStatus(true);
     try {
       const res = await signedFetch(
-        `${process.env.REACT_APP_API_URL}/get-info/get-relayer-transaction?transactionId=${parsedJobStatus.transactionId}`,
+        `${process.env.REACT_APP_API_URL}/get-info/get-relayer-transaction?jobId=${parsedJobStatus.jobId}`,
         {
           method: "GET",
         }
@@ -284,7 +284,7 @@ function App() {
         {parsedJobStatus?.transactionId && (
           <>
             <h2>5. Get Transaction Status</h2>
-            <textarea value={parsedJobStatus.transactionId} readOnly />
+            <textarea value={parsedJobStatus.jobId} readOnly />
             <br />
 
             <button onClick={handleGetTxnStatus} disabled={loadingTxnStatus}>
@@ -297,20 +297,12 @@ function App() {
       </div>
 
       <div>
-        {parsedTxnStatus?.hash && (
+        {parsedTxnStatus?.chainUrl && (
           <>
             <h2>6. Verify on Chain</h2>
-            <textarea
-              value={`https://glhf-testnet.explorer.caldera.xyz/tx/${parsedTxnStatus?.hash}`}
-              readOnly
-            />
+            <textarea value={parsedTxnStatus?.chainUrl} readOnly />
             <button
-              onClick={() =>
-                window.open(
-                  `https://glhf-testnet.explorer.caldera.xyz/tx/${parsedTxnStatus?.hash}`,
-                  "_blank"
-                )
-              }
+              onClick={() => window.open(parsedTxnStatus?.chainUrl, "_blank")}
             >
               View Transaction
             </button>
