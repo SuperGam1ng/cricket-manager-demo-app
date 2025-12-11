@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
-import { buildRelayerTransaction } from "./signing";
-import { signRequest } from "./rsa-signing";
+import { buildRelayerTransaction } from "./signing.js";
+import { signRequest } from "./rsa-signing.js";
 
 const signedFetch = async (url, options = {}) => {
   let bodyObj = null;

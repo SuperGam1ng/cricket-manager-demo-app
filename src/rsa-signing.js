@@ -1,4 +1,4 @@
-import { KJUR } from "jsrsasign/lib/jsrsasign";
+import { KJUR } from "jsrsasign/lib/jsrsasign.js";
 
 // Helper function to convert hex to base64
 function hexToBase64(hexstring) {
