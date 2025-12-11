@@ -13,6 +13,8 @@ RUN npm ci
 # Copy app source
 COPY . .
 
+RUN npm run build
+
 # Set production env and expose default port (change if your app uses a different one)
 ENV NODE_ENV=production
 EXPOSE 2020
