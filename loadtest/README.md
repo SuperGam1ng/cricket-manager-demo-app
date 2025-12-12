@@ -30,4 +30,4 @@ k6 just submits the transactions after that *remove the trailing data in the log
 node parse_results.js
 ```
 
-the above will call the status API and log how long it took (diff between first status and last status)
+the above will call the status API and log how long it took (diff between first status and last status) 
