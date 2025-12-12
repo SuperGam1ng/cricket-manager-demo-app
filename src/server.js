@@ -1,13 +1,18 @@
+import dotenv from "dotenv";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, "../.env") });
+
+console.log(process.env.REACT_APP_RPC_URL);
+
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import crypto from 'crypto';
 
-import { buildRelayerTransaction } from './signing.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
+const { buildRelayerTransaction } = await import("./signing.js");
 
 const app = express();
 
