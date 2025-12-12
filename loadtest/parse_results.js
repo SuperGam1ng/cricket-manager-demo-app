@@ -3,9 +3,9 @@ import readline from 'readline';
 import fetch from 'node-fetch';
 
 // Input log file
-const inputFile = 'vkc.results.log';
+const inputFile = './tests/ctokens.log';
 // Output CSV file
-const outputFile = 'vkc.statuses.csv';
+const outputFile = inputFile + '.csv';
 
 // Write CSV header
 fs.writeFileSync(outputFile, "jobId,status,timeDiffSeconds\n");

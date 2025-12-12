@@ -7,35 +7,16 @@ export default function () {
     const adminPrivateKey = "650d9f993da85046ceefe05d9c7c930fa2712b7a282e8f54c245ea1c2b03e3f1";
 
 
-    // const r1 = http.post(backendhost + "contract/setContract", JSON.stringify(
-    //     {
-    //         "contractAddress": "0xAbE8C14C6501db6892B07B918E7F06F276D2976c",
-    //         "adminWalletAddress": "0xb46be61fb0dd88fb5eb2f5ad7163454304314b82",
-    //         "action": "Unpause"
-    //     }
-    // ), { headers: { 'Content-Type': 'application/json' } });
-    // const payload = r1.json();
-    const currentIteration = exec.scenario.iterationInTest + 1;
-    console.log("Current Iteration: " + currentIteration);
+    const currentIteration = exec.scenario.iterationInTest;
     const r1 = http.post(backendhost + "cricketer/create-token", JSON.stringify(
         {
-            "name": "VKT" + currentIteration,
+            "name": "Test" + currentIteration,
             "adminWalletAddress": "0xb46be61fb0dd88fb5eb2f5ad7163454304314b82",
-            "symbol": "VKC" + currentIteration,
+            "symbol": "T" + currentIteration,
             "initialSupply": 10
         }
     ), { headers: { 'Content-Type': 'application/json' } });
     const payload = r1.json();
-
-
-    // const r1 = http.post(backendhost + "cricketer/add-supply", JSON.stringify(
-    //     {
-    //         "contractAddress": "0x9F4DfDb029350C77da2cB024c68b81bE80DAc0a7",
-    //         "adminWalletAddress": "0xb46be61fb0dd88fb5eb2f5ad7163454304314b82",
-    //         "additionalSupply": 1
-    //     }
-    // ), { headers: { 'Content-Type': 'application/json' } });
-    // const payload = r1.json();
 
 
     const r2 = http.post(demohost + "api/sign", JSON.stringify({
