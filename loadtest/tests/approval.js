@@ -36,5 +36,5 @@ export default function () {
     JSON.stringify(r2.json()),
     { headers: { "Content-Type": "application/json" } }
   );
-  console.log(r3.json());
+  console.log(JSON.stringify(r3.json()));
 }

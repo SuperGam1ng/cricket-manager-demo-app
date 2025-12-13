@@ -15,7 +15,9 @@ async function processLine(line) {
 
   let parsed;
   try {
-    parsed = JSON.parse(line);
+    const jsonMatch = line.match(/\{.*\}/);
+    if (!jsonMatch) return;
+    parsed = JSON.parse(jsonMatch[0]);
   } catch (err) {
     console.error("Invalid JSON line:", line);
     return;
