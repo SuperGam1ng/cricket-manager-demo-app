@@ -14,7 +14,7 @@ K6 doesn't run on node it just have javascript scripting.
 CD to the /loadtest/tests folder and run
 
 ```
-k6 run --vus 1 --iterations 100  createtokens.js --console-output ctokens.log
+k6 run --vus 1 --iterations 10  createtokens.js --console-output ctokens.log
 k6 run --vus 1 --iterations 10  approval.js --console-output approval.log
 ```
 
@@ -30,7 +30,8 @@ Create tokens test includes three steps
 k6 just submits the transactions after that _remove the trailing data in the log file_ i.e. there is some random data in each line remove it using multiline edit or something and edit parse_results.js with the log file as input and run
 
 ```
-node parse_results.js
+node parse_results.js ctokens.log
+node parse_results.js approval.log
 ```
 
 the above will call the status API and log how long it took (diff between first status and last status)

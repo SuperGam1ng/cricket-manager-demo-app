@@ -16,6 +16,7 @@ export default function () {
       fromWalletAddress: "0x75933a1aaa8576585cf9608d242c25e1f497904f",
       toWalletAddress: "0xb46be61fb0dd88fb5eb2f5ad7163454304314b82",
       quantity: 10,
+      contractAddress: "0x54DB4850BdF3B1E62f6116cb6071c4c6177D6a6d",
     }),
     { headers: { "Content-Type": "application/json" } }
   );
