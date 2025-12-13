@@ -7,16 +7,15 @@ export default function () {
   const demohost =
     "https://cricket-manager-demo-app-894136132206.asia-south1.run.app/";
   const adminPrivateKey =
-    "650d9f993da85046ceefe05d9c7c930fa2712b7a282e8f54c245ea1c2b03e3f1";
+    "325efc05101dc6e427b306f61426ae4bb438ed2e5627ed0a2169c9d1da292892";
 
   const currentIteration = exec.scenario.iterationInTest;
   const r1 = http.post(
-    backendhost + "cricketer/create-token",
+    backendhost + "wallet/approval",
     JSON.stringify({
-      name: "Test01" + currentIteration,
-      adminWalletAddress: "0xb46be61fb0dd88fb5eb2f5ad7163454304314b82",
-      symbol: "T" + currentIteration,
-      initialSupply: 10,
+      fromWalletAddress: "0x75933a1aaa8576585cf9608d242c25e1f497904f",
+      toWalletAddress: "0xb46be61fb0dd88fb5eb2f5ad7163454304314b82",
+      quantity: 10,
     }),
     { headers: { "Content-Type": "application/json" } }
   );
@@ -30,8 +29,6 @@ export default function () {
     }),
     { headers: { "Content-Type": "application/json" } }
   );
-
-  const jobId = r2.json().jobId;
 
   const r3 = http.post(
     backendhost + "jobs/submit-transaction",
