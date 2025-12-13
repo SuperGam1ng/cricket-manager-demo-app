@@ -1,0 +1,7 @@
+jobId,jobStatus,transactionStatus,transactionHash,statusReason,forwarderNonce,nonce,speed,gasLimit,timeDiffSeconds
+ff4e31e7-fc5d-40fb-999e-fbc08dc3c644,Success,confirmed,0x0ac37e925fe0f71dd157e458944999d62ba534ba67cb06f33a9d769de8b3e51e,N/A,4,740,average,98814,N/A
+cdec19ca-30c0-4c19-ae10-9cbe40ea98ed,Success,confirmed,0x4bb68aeaee62ba0fef5467e2762ae332a98d0e719534e9bcf11b480130ecddb3,N/A,5,741,average,98829,N/A
+dad23d83-0b1e-48dc-b3f6-989354c543c6,Failed,failed,0xba9a9df6d5b4950f99c06e949a20916df11dbe1e8577802b00cc1ff58a4124b6,N/A,5,742,average,98829,N/A
+eb29c719-48c5-41cf-92e2-cef7f2aadb6a,Failed,failed,0x248b9f6cfcb632236bd0b5f132e74871f728a46fdf27d5d2ba488ab634fa0cb8,N/A,5,743,average,98829,N/A
+c1eda421-321a-441d-92d6-39c708edcd86,Failed,failed,0x340379a86e75a8cb4573280ee170b137f72d48b71213f220d8b00d0d478d5386,N/A,5,744,average,98829,N/A
+6bdaa963-b673-4bb6-a91b-195b8115c797,Success,confirmed,0x15b9336fabd97c3f8de36e48ec42eaaa98c1196065f34d8d512ba5f78ddfb08b,N/A,6,745,average,98814,N/A

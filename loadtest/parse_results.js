@@ -10,7 +10,7 @@ const outputFile = inputFile + ".csv";
 // Write CSV header
 fs.writeFileSync(
   outputFile,
-  "jobId,jobStatus,transactionStatus,transactionHash,statusReason,nonce,speed,gasLimit,timeDiffSeconds\n"
+  "jobId,jobStatus,transactionStatus,transactionHash,statusReason,forwarderNonce,nonce,speed,gasLimit,timeDiffSeconds\n"
 );
 
 async function processLine(line) {
@@ -27,6 +27,7 @@ async function processLine(line) {
   }
 
   const jobId = parsed.jobId;
+  const forwarderNonce = parsed.forwarderNonce;
   if (!jobId) {
     console.error("No jobId found in line:", line);
     return;
@@ -55,7 +56,7 @@ async function processLine(line) {
       diffSeconds = (last - first) / 1000;
     }
 
-    const csvLine = `${jobId},${jobStatus},${transactionStatus},${transactionHash},${statusReason},${nonce},${speed},${gasLimit},${diffSeconds}\n`;
+    const csvLine = `${jobId},${jobStatus},${transactionStatus},${transactionHash},${statusReason},${forwarderNonce},${nonce},${speed},${gasLimit},${diffSeconds}\n`;
     fs.appendFileSync(outputFile, csvLine);
 
     console.log(`Processed jobId=${jobId}`);

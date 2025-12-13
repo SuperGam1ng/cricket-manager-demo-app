@@ -21,6 +21,7 @@ export default function () {
     { headers: { "Content-Type": "application/json" } }
   );
   const payload = r1.json();
+  const forwarderNonce = payload.transactionPayload.forwardRequest.nonce;
 
   const r2 = http.post(
     demohost + "api/sign",
@@ -36,5 +37,5 @@ export default function () {
     JSON.stringify(r2.json()),
     { headers: { "Content-Type": "application/json" } }
   );
-  console.log(JSON.stringify(r3.json()));
+  console.log(JSON.stringify({ ...r3.json(), forwarderNonce }));
 }
